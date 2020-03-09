@@ -1,3 +1,4 @@
+
 <!DOCTYPE html>
 <html lang="en">
     <head>
@@ -32,7 +33,7 @@
                     <a href="index.html" class="navbar-brand mr-0 mr-md-2 logo">
                         <span class="logo-lg">
                             <img src="assets/images/logo.png" alt="" height="24" />
-                            <span class="d-inline h5 ml-1 text-logo">Pocurement system</span>
+                            <span class="d-inline h5 ml-1 text-logo">Procurement system</span>
                         </span>
                         <span class="logo-sm">
                             <img src="assets/images/logo.png" alt="" height="24">
@@ -78,7 +79,21 @@
                     <img src="assets/images/users/avatar-7.jpg" class="avatar-xs rounded-circle mr-2" alt="Shreyu" />
 
                     <div class="media-body">
-                        <h6 class="pro-user-name mt-0 mb-0"><?php echo $this->session->userdata('name');?></h6>
+                        <h6 class="pro-user-name mt-0 mb-0" style="text-transform: capitalize;">
+                          
+                        	<?php 
+
+ 
+                            $user = $this->session->userdata('logged_in');
+echo $user['name'];
+ // echo $user['email'];
+// $user = $this->session->userdata('logged_in'); 
+// echo $this->session->userdata('name');
+                        		?>
+
+           
+         
+                        	</h6>
                         <span class="pro-user-desc">Administrator</span>
                     </div>
                    
@@ -92,7 +107,7 @@
                             <li>
                                 <a href="index.html">
                                     <i data-feather="home"></i>
-                                    <span class="badge badge-success float-right">1</span>
+                                 
                                     <span> Dashboard </span>
                                 </a>
                             </li>

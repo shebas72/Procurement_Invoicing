@@ -3,21 +3,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 
 class Login extends CI_Controller {
 
-	/**
-	 * Index Page for this controller.
-	 *
-	 * Maps to the following URL
-	 * 		http://example.com/index.php/welcome
-	 *	- or -
-	 * 		http://example.com/index.php/welcome/index
-	 *	- or -
-	 * Since this controller is set as the default controller in
-	 * config/routes.php, it's displayed at http://example.com/
-	 *
-	 * So any other public methods not prefixed with an underscore will
-	 * map to /index.php/welcome/<method_name>
-	 * @see https://codeigniter.com/user_guide/general/urls.html
-	 */
+
 function __construct() {
 parent::__construct();
 
@@ -32,8 +18,12 @@ parent::__construct();
 
 	public function index()
 	{
+        
 		$logged_in = $this->session->userdata('logged_in');
+        $name = $this->session->userdata('name');
         if($logged_in){
+          
+
             //if yes redirect to welcome page
             redirect(base_url().'app/dashboard');
         }
@@ -45,15 +35,33 @@ parent::__construct();
 
 	    public function doLogin() {
         //get the input fields from login form
+       
+        $name = $this->input->post('name');
         $email = $this->input->post('email');
         $password = sha1($this->input->post('password'));
-        
+       
         //send the email pass to query if the user is present or not
         $check_login = $this->login->checkLogin($email, $password);
         //if the result is query result is 1 then valid user
         if ($check_login) {
+        	// $this->data['name'] = $this->session->userdata('name');
+
+
+
             //if yes then set the session 'loggin_in' as true
-            $this->session->set_userdata('logged_in', true);
+         // $this->session->set_userdata('logged_in', true);
+         $this->session->set_userdata('logged_in', $check_login);
+       
+         // $this->session->set_userdata('email');
+
+ // $session_user = array(
+ //    'id' => $row->id,
+ //    'name' => $row->name
+ //     );
+ //   $this->session->set_userdata($session_user);
+
+ //         $this->session->set_userdata('name');
+// $this->session->set_userdata('name',$checkLogin['id']);
             redirect(base_url().'app/dashboard');
         } else {
             //if no then set the session 'logged_in' as false
@@ -64,6 +72,10 @@ parent::__construct();
             redirect(base_url().'app/login');            
         }
     }
+
+ // public function getcurrentuser() {
+ //         $cname= $this->session->set_userdata('name');
+ //    }
 
         public function logout() {
         //unset the logged_in session and redirect to login page
