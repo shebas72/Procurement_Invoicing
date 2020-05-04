@@ -52,3 +52,6 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 $route['default_controller'] = 'welcome';
 $route['404_override'] = '';
 $route['translate_uri_dashes'] = FALSE;
+$route['managesupplierfull'] = 'app/managesupplierfull';
+$route['managesupplierfull/(:any)'] = 'app/managesupplierfull/$1';
+$route['managesupplierfull/update/(:any)'] = 'app/managesupplierfull/update/$1';
