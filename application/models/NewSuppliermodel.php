@@ -1,64 +1,50 @@
-    <?php
-    class NewSuppliermodel extends CI_Model{
-
-
-       
-        function add_user($name,$email,$phone,$company,$address,$sid,$city,$region,$country,$postbox)
-  {
-  $query="insert into suppliers values('','$name','$email','$company','$phone','$address','$city','$region','$country','$postbox')";
-  $this->db->query($query);
-  }
-
-
-       function displayrecords()
-	{
-	  $this->db->select("*");
-  $this->db->from('suppliers');
-  $query = $this->db->get();
-  return $query->result();
- }
-
-
- public function updaterecords344343()
-    {
-        $this->load->helper('url');
-        // $sid = $this->input->post('sid');
- 
-        $data = array(
-            // 'title' => $this->input->post('title'),
-            // 'description' => $this->input->post('description')
-          'name' =>$this->input->post('name'),
-    'email' =>$this->input->post('email'),
-    'phone' =>$this->input->post('phone'),
-    'company' =>$this->input->post('company'),
-    'address' =>$this->input->post('address'),
-    'city' =>$this->input->post('city'),
-    'region' =>$this->input->post('region'),
-    'country' =>$this->input->post('country'),
-    'postbox' =>$this->input->post('postbox')
-        );
-        
-            $this->db->where('sid', $sid);
-            $this->db->update('suppliers', $data);
-        
+    <?php if ( ! defined('BASEPATH')) exit('No direct script access allowed');
+class NewSuppliermodel extends CI_Model{
+    /*
+     * Get suppliers
+     */
+    function getRows($id = ""){
+        if(!empty($id)){
+            $query = $this->db->get_where('suppliers', array('id' => $id));
+            return $query->row_array();
+        }else{
+            $query = $this->db->get('suppliers');
+            return $query->result_array();
+        }
     }
-	
-// public function updaterecords($name,$email,$phone,$company,$address,$sid,$city,$region,$country,$postbox)
-public function updaterecords()
-  {
-    $this->load->helper('url');
-        // $sid = $this->input->post('sid');
-  $query=$this->db->query("update suppliers SET name='$name',email='$email',phone='$phone',company='$company',address='$address',city='$city',region='$region',country='$country',postbox='$postbox' where sid='".$sid."'");
-   // return $query->result();
-return $this->db->last_query();
-
-
-  } 
-
- function displayrecordsById($sid)
-  {
-  $query=$this->db->query("select * from suppliers where sid='".$sid."'");
-  return $query->result();
-  }
-
+    
+    /*
+     * Insert post
+     */
+    public function insert($data = array()) {
+        $insert = $this->db->insert('suppliers', $data);
+        if($insert){
+            return $this->db->insert_id();
+        }else{
+            return false;
+        }
     }
+    
+    /*
+     * Update post
+     */
+    public function update($data, $id) {
+        if(!empty($data) && !empty($id)){
+            $update = $this->db->update('suppliers', $data, array('id'=>$id));
+            return $update?true:false;
+        }else{
+            return false;
+        }
+    }
+    
+    /*
+     * Delete post
+     */
+    public function delete($id){
+        $delete = $this->db->delete('suppliers',array('id'=>$id));
+        return $delete?true:false;
+    }
+}
+
+
+   
